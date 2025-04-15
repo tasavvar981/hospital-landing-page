@@ -10,16 +10,20 @@ const Navbar = () => {
   // Close mobile menu when screen width > 768px
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
+      if (typeof window !== "undefined" && window.innerWidth > 768) {
         setMenuOpen(false);
       }
     };
 
-    window.addEventListener("resize", handleResize);
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", handleResize);
+    }
 
     // Cleanup on unmount
     return () => {
-      window.removeEventListener("resize", handleResize);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", handleResize);
+      }
     };
   }, []);
 
