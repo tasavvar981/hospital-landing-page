@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import quotes from "../images/quotes.png";
 
 function Testimonials() {
   const [reviews, setReviews] = useState([]);
@@ -55,7 +56,7 @@ function Testimonials() {
                 <p className="testimonial-company">{review.Company}</p>
               </div>
             </div>
-            <span className="quote-icon">”</span>
+            <img src={quotes} alt="Quote Icon" className="quote-icon" />
           </div>
         ))}
       </div>

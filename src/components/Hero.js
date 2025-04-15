@@ -15,9 +15,12 @@ const Hero = () => {
           <button className="btn-secondary">Departments</button>
         </div>
       </div>
+      <div className="imagecontainer">
       <div className="hero-image">
-        <img src="/doctor.png" alt="Doctor" />
+
       </div>
+      </div>
+    
     </section>
   );
 };
