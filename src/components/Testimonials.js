@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import quotes from "../images/quotes.png";
 
 function Testimonials() {
   const [reviews, setReviews] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const wrapperRef = useRef(null);
 
   useEffect(() => {
     axios
@@ -16,31 +16,26 @@ function Testimonials() {
       .catch((err) => console.error("Failed to fetch reviews", err));
   }, []);
 
-  const next = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex + 2 < reviews.length ? prevIndex + 2 : prevIndex
-    );
+  const scrollRight = () => {
+    if (wrapperRef.current) {
+      wrapperRef.current.scrollBy({ left: 300, behavior: "smooth" });
+    }
   };
 
-  const prev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 2 >= 0 ? prevIndex - 2 : 0));
+  const scrollLeft = () => {
+    if (wrapperRef.current) {
+      wrapperRef.current.scrollBy({ left: -300, behavior: "smooth" });
+    }
   };
 
   return (
     <section className="testimonial-section">
       <h2>What Our Customers Say</h2>
 
-      <div className="testimonial-nav">
-        <button onClick={prev} disabled={currentIndex === 0}>
-          ←
-        </button>
-        <button onClick={next} disabled={currentIndex + 2 >= reviews.length}>
-          →
-        </button>
-      </div>
+   
 
-      <div className="testimonial-slider">
-        {reviews.slice(currentIndex, currentIndex + 2).map((review) => (
+      <div className="testimonial-wrapper" ref={wrapperRef}>
+        {reviews.map((review) => (
           <div className="testimonial-card" key={review.ID}>
             <p className="testimonial-text">"{review.Reviews}"</p>
             <div className="testimonial-footer">
@@ -57,7 +52,6 @@ function Testimonials() {
               </div>
             </div>
             <img src={quotes} alt="Quote Icon" className="quote-icon" />
-
           </div>
         ))}
       </div>
